@@ -1,7 +1,10 @@
+import 'package:app_yes_no_20024_2/domain/entities/message.dart';
+import 'package:app_yes_no_20024_2/presentation/providers/chat_provider.dart';
 import 'package:app_yes_no_20024_2/presentation/widgeets/MessageFieldBox.dart';
 import 'package:app_yes_no_20024_2/presentation/widgeets/her_message_Bubble.dart';
 import 'package:app_yes_no_20024_2/presentation/widgeets/my_message_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -28,25 +31,27 @@ class _ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatProvider = context.watch<ChatProvider>();
+    final messages = chatProvider.message;
     return SafeArea(
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(children: [
             Expanded(
               child: ListView.builder(
-                  itemCount: 9,
+                  controller: chatProvider.chatController,
+                  itemCount: messages.length,
                   itemBuilder: (context, index) {
-                    return index.isEven
-                        ? const MyMessageBubble(
-                            message: "dame de comer",
+                    return messages[index].fromWho == FromWho.me
+                        ? MyMessageBubble(
+                            message: messages[index].text,
                           )
-                        : const HerMessageBubble(
-                            message: "nel pastel",
-                            urlGif:
-                                'https://yesno.wtf/assets/no/5-73e4adfe4da265a646fe517128bb5bf2.gif');
+                        : HerMessageBubble(
+                            message: messages[index].text,
+                            urlGif: messages[index].imageUrl);
                   }),
             ),
-            const Messagefieldbox()
+            Messagefieldbox(onFieldSummit: chatProvider.sendMessage)
           ])),
     );
   }

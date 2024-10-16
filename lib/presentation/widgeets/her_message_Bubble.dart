@@ -15,10 +15,10 @@ class HerMessageBubble extends StatelessWidget {
           decoration: BoxDecoration(
               color: colors.secondary, borderRadius: BorderRadius.circular(20)),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
               message,
-              style: TextStyle(color: Colors.white, fontSize: 30),
+              style: const TextStyle(color: Colors.white, fontSize: 30),
             ),
           ),
         ),
@@ -41,7 +41,6 @@ class _ImageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print(size.width);
     final sizeWidth = size.width > 440.0 ? size.width * 0.4 : size.width * 0.7;
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -55,9 +54,9 @@ class _ImageBubble extends StatelessWidget {
                     : Container(
                         width: sizeWidth,
                         height: 150,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Text("Cargando Imagen..."),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text("Cargando Imagen..."),
                       )));
   }
 }
